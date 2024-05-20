@@ -7,7 +7,6 @@ FileX is a Python-based file explorer application built using PyQt5. It provides
 - **Intuitive Interface:** Navigate through files and directories with ease.
 - **File Management:** Rename, delete, and create new files and folders directly from the application.
 - **Search Functionality:** Quickly find files using the search feature.
-- **Customizable Views:** Choose from different viewing options to suit your preferences.
 - **Command Execution:** Execute commands and view results within the application.
 
 ## Installation
