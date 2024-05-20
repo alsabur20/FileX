@@ -14,7 +14,7 @@ FileX is a Python-based file explorer application built using PyQt5. It provides
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/FileX.git
+    git clone https://github.com/alsabur20/FileX.git
     cd FileX
     ```
 
