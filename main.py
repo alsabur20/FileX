@@ -113,8 +113,7 @@ class MyApp(QWidget):
             if selectedName.endswith(".lnk"):
                 self.commandArea.setText("\""+selectedName+"\"")
             else:
-                os.startfile(selectedName)
-                # self.commandArea.setText('notepad "'+selectedName+'"')
+                self.commandArea.setText('"'+selectedName+'"')
         else:
             self.commandArea.setText('cd "'+selectedName+'"')
     
@@ -136,9 +135,10 @@ class MyApp(QWidget):
             self.draw()
         else:
             try:
+                os.startfile(selectedName)
                 # self.commandArea.setText('notepad '+selectedName)
                 # os.system('notepad '+selectedName)
-                threading.Thread(target=os.system, args=(self.commandArea.text(),)).start()
+                # threading.Thread(target=os.system, args=(self.commandArea.text(),)).start()
                 # os.system(self.commandArea.text())
             except Exception as e:
                 print(type(e), e)
