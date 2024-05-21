@@ -22,6 +22,7 @@ import sys
 import threading
 import time
 import getpass
+import subprocess
 user = getpass.getuser()
 
 # Extras
@@ -166,14 +167,25 @@ class MyApp(QWidget):
 
     def execFunction(self):
         cmd = self.commandArea.text()
-        if cmd=="": return
-        os.system(cmd+' > '+os.getcwd()+'\\results.txt')
-        see=open(os.getcwd()+'\\results.txt').read()
-        if see!="":
-            QMessageBox.information(self,"Result(s)",see,QMessageBox.Ok)
-        else:
-            os.remove(os.getcwd()+"\\results.txt")
-            QMessageBox.information(self,"Result(s)","Command did not produce an output.",QMessageBox.Ok)
+        if cmd == "": return
+
+        results_file = os.path.join(os.getcwd(), "results.txt")        
+        try:
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True)           
+            if result.returncode == 0:
+                with open(results_file, 'w') as f:
+                    f.write(result.stdout)
+
+                see = open(results_file).read()
+
+                if see:
+                    QMessageBox.information(self, "Result(s)", see, QMessageBox.Ok)
+                else:
+                    QMessageBox.information(self, "Result(s)", "Command executed successfully but produced no output.", QMessageBox.Ok)
+            else:
+                QMessageBox.information(self, "Error", f"Command failed with error: {result.stderr}", QMessageBox.Ok)
+        except Exception as e:
+            QMessageBox.information(self, "Error", f"An unexpected error occurred: {str(e)}", QMessageBox.Ok)
         self.draw()
 
     def homeFunction(self):
